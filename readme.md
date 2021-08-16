@@ -4,10 +4,13 @@
 
 <h3> Setup Instructions </h3>
 
-1) Install required Packages
+1) Install required Packages. 
+Checkout https://pytorch.org/get-started/locally/ for the best Torch installation for your machine. 
+Enabling Cuda (GPU) as your device is strongly recommended as it will make testing and training much more efficient. 
+
 2) Run main.py for first time setup
-3) Add file(s) to the /data folder with your desired testing data. Run main.py to generate testing sets, run training and to generate a model.
-4) (Optional) The Generated data can be moved into the /tests directory and new data sets and models can be generated and tested against it. 
+3) Add file(s) to the 'data' folder with your desired testing data. Run main.py to generate testing sets, run training and to generate a model.
+4) (Optional) The Generated data can be moved into the 'tests' directory and new data sets and models can be generated and tested against it. 
 
 Required Python Packages
 
@@ -18,15 +21,11 @@ scikit-image <br>
 pandas<br>
 matplotlib
 
-Checkout :
-https://pytorch.org/get-started/locally/ for the best Torch installation for your machine.
-
-Enabling Cuda (GPU) as your device is strongly recommended as it will make testing and training far more time efficient. 
 
 
 
+<h3>Linux Package Installation: </h3>
 
->For Linux Package Installation: 
 ```bash
 pip3 install numpy
 
@@ -38,7 +37,8 @@ pip3 install pandas
 
 pip3 install matplotlib
 ```
->For Windows Package Installation:
+<h3>Windows Package Installation: </h3>
+
 ```bash
 pip3 install numpy
 
