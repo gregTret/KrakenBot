@@ -21,9 +21,9 @@ def BuildTest(directory,saveDirectory):
         f.close()
     def generate(data,gfc):
         for x in range(len(data)):
-            if (x<len(data)-41):
+            if (x<len(data)-101):
                 test=[]
-                for i in range(40):
+                for i in range(100):
                     test.append(data[x+i])
                 ltf('set/'+str(gfc),test)
                 gfc+=1 
@@ -72,6 +72,8 @@ def BuildTest(directory,saveDirectory):
     def imgGen(filename,df):
         df.data.plot()
         plt.savefig(filename,dpi=20)
+        # For Fullsize Images
+        # plt.savefig(filename)
         plt.clf()
 
     def generate(data,gfc):
