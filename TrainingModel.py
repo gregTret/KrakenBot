@@ -12,7 +12,7 @@ from datetime import datetime,timezone
 warnings.simplefilter(action='ignore', category=FutureWarning)
 warnings.simplefilter(action='ignore', category=UserWarning)
 
-def TrainModel(root_directory,saveLocation):
+def TrainModel(root_directory,saveLocation,numEpochs):
     device = torch.device ('cuda' if torch.cuda.is_available() else 'cpu')
     print ("Using:",device)
     in_channel=3
@@ -20,9 +20,9 @@ def TrainModel(root_directory,saveLocation):
 
     learning_rate=1e-3
     batch_size=32
-    num_epochs=10
+    num_epochs=numEpochs
     
-    dataset= newDataSet(csv_file=root_directory+'classifications.csv',root_dir=root_directory+'\images',transform = transforms.ToTensor())
+    dataset= newDataSet(csv_file=root_directory+'classifications.csv',root_dir=root_directory+'images',transform = transforms.ToTensor())
     if (len(dataset)%2==0):
         split1=int(len(dataset)*0.8)
         split2=len(dataset)-split1
