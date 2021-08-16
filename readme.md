@@ -11,7 +11,7 @@ Enabling Cuda (GPU) as your device is strongly recommended as it will make testi
 2) Run main.py for first time setup
 3) Add file(s) to the 'data' folder with your desired testing data. Run main.py to generate testing sets, run training and to generate a model.
 4) (Optional) The Generated data can be moved into the 'tests' directory and new data sets and models can be generated and tested against it. 
-5) (Optional) Run KrakenMain.py for a stand alone version of the program set up with API calls to Kraken.
+5) (Optional) Run KrakenMain.py for a stand alone version of the program set up with API calls to Kraken using a custom Pytorch model configured with Googlenet.
 
 Required Python Packages
 
