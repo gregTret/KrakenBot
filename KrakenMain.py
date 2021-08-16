@@ -15,12 +15,10 @@ while (KrakenStatus()==0):
     # Getting Monero Prices
     latest=XMRUSD(5,'high')
     # Converting list to JPEG
-    ListToJPEG(latest,testLocation)
+    ListToJPEG(latest,testLsocation)
     # Classifying Image based on Model
     if (ClassifyImage(modelLocation, testLocation)==1):
         print ("XMR is Low Purchase at: "+str(latest[len(latest)-1]))
-        subprocess.call(["notify-send",'Testing Notifications',"Go Check Kraken out", '-u','critical'])
-        subprocess.call(['spd-say','AIAIAIOAIOAIOAIAOIAOIA'])
     else:
         print ("Current Price: "+str(latest[len(latest)-1]))
     # Waiting for 5 minutes
