@@ -52,6 +52,11 @@ def XMRUSD(selection,dataToReturn):
         for x in range (len(data)):
             alt.append(float(data[x][1]))
         return alt
+    elif (dataToReturn=='low'):
+        alt=[]
+        for x in range (len(data)):
+            alt.append(float(data[x][2]))
+        return alt
 
 def ListToJPEG(data,filename):
     newData=[]
@@ -60,5 +65,5 @@ def ListToJPEG(data,filename):
             newData.append(data[i])
     df = pd.DataFrame(newData, columns=['data'])
     df.data.plot()
-    plt.savefig(filename,dpi=20)
+    plt.savefig(filename,dpi=30)
     plt.clf()

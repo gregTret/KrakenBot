@@ -5,7 +5,7 @@ from TrainingModel import TrainModel
 from TestingModel import TestModel
 from Setup import SetupDirectories
 
-numberOfEpochs=4
+numberOfEpochs=10
 directory_path = os.getcwd()
 mainDataDirectory=directory_path+'/data/'
 testSaveDirectory=directory_path+'/generatedData/'

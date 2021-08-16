@@ -71,7 +71,7 @@ def BuildTest(directory,saveDirectory):
 
     def imgGen(filename,df):
         df.data.plot()
-        plt.savefig(filename,dpi=20)
+        plt.savefig(filename,dpi=30)
         # For Fullsize Images
         # plt.savefig(filename)
         plt.clf()
