@@ -21,6 +21,6 @@ if (SetupDirectories(directory_path)):
     # Testing Models (Optional)
     # TestModel(modelSaveLocation,extraTestLocation)
 else:
-    print ("Completed first time setup. Please add somse data to the Data folder to generate models and run again")
+    print ("Completed first time setup. Please add some data to the Data folder to generate models and run again")
 
     
