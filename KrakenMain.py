@@ -18,9 +18,9 @@ while (KrakenStatus()==0):
     ListToJPEG(latest,testLsocation)
     # Classifying Image based on Model
     if (ClassifyImage(modelLocation, testLocation)==1):
-        print ("XMR is Low Purchase at: "+str(latest[len(latest)-1]))
+        print ("XMR is ready: "+str(latest[len(latest)-1]))
     else:
-        print ("Current Price: "+str(latest[len(latest)-1]))
+        print ("Current: "+str(latest[len(latest)-1]))
     # Waiting for 5 minutes
     time.sleep(60*5)
 
