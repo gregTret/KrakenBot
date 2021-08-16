@@ -17,7 +17,7 @@ if (SetupDirectories(directory_path)):
     # Building Tests
     BuildTest(mainDataDirectory,testSaveDirectory)
     # Training Models
-    TrainModel(testSavesDirectory+'set/',modelSaveLocation,numberOfEpochs)
+    TrainModel(testSaveDirectory+'set/',modelSaveLocation,numberOfEpochs)
     # Testing Models (Optional)
     # TestModel(modelSaveLocation,extraTestLocation)
 else:
