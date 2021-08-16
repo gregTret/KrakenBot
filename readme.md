@@ -19,7 +19,8 @@ Required Python Packages
 torch<br>
 scikit-image <br>
 pandas<br>
-matplotlib
+matplotlib <br>
+pillow
 
 
 
@@ -36,6 +37,8 @@ pip3 install scikit-image
 pip3 install pandas
 
 pip3 install matplotlib
+
+pip3 install pillow
 ```
 <h3>Windows Package Installation: </h3>
 
@@ -49,4 +52,6 @@ pip3 install scikit-image
 pip3 install pandas
 
 pip3 install matplotlib
+
+pip3 install pillow
 ```
