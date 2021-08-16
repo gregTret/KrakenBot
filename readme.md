@@ -27,7 +27,7 @@ Enabling Cuda (GPU) as your device is strongly recommended as it will make testi
 
 
 >For Linux Package Installation: 
-
+```bash
 pip3 install numpy
 
 pip3 install torch torchvision torchaudio
@@ -37,9 +37,9 @@ pip3 install scikit-image
 pip3 install pandas
 
 pip3 install matplotlib
-
+```
 >For Windows Package Installation:
-
+```bash
 pip3 install numpy
 
 pip3 install torch==1.9.0+cu102 torchvision==0.10.0+cu102 torchaudio===0.9.0 -f https://download.pytorch.org/whl/torch_stable.html
@@ -49,4 +49,4 @@ pip3 install scikit-image
 pip3 install pandas
 
 pip3 install matplotlib
-
+```
