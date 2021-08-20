@@ -21,7 +21,7 @@ while (KrakenStatus()==0):
         print ("XMR is Low Currently At: "+str(latest[len(latest)-1]))
         try:
             subprocess.call(["notify-send",'Testing Notifications',"Go Check Kraken out", '-u','critical'])
-            subprocess.call(['spd-say','BeepBoopJoeBidenWakeupJoeBidenWakeup'])
+            subprocess.call(['spd-say','BeepBoop'])
         except:
             pass
     else:
