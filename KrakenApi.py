@@ -16,7 +16,6 @@ def KrakenStatus():
             print ("Failed to get Kraken Status, trying again")
             fail=1
             pass
-           
         time.sleep(5)
     if (res=="online"):
         return 0
@@ -50,15 +49,21 @@ def XMRUSD(selection,dataToReturn):
     elif (dataToReturn=='high'):
         alt=[]
         for x in range (len(data)):
-            alt.append(float(data[x][1]))
+            alt.append(float(data[x][2]))
         return alt
     elif (dataToReturn=='low'):
         alt=[]
         for x in range (len(data)):
-            alt.append(float(data[x][2]))
+            alt.append(float(data[x][3]))
+        return alt
+    elif (dataToReturn=='average'):
+        alt=[]
+        for x in range (len(data)):
+            alt.append((float(data[x][2])+float(data[x][2]))/2)
         return alt
 
 def ListToJPEG(data,filename):
+    print ("Generating Image")
     newData=[]
     for i in range(len(data)):
         if (i>=(len(data)-101)):
