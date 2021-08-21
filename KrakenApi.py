@@ -26,11 +26,13 @@ def KrakenStatus():
     else:
         return 3
 
-#Get XMR/USD Trade data (Time interval to use/Columns to return)
-def XMRUSD(selection,dataToReturn):
+#Get Current Trade data (Time interval to use/Columns to return)
+def getCurrentPrice(selection,dataToReturn,currencyPair,CurrencyNickname):
     data=[]
     selection=str(selection)
-    url="https://api.kraken.com/0/public/OHLC?pair=XMRUSD&interval="
+    url="https://api.kraken.com/0/public/OHLC?pair="
+    url+=currencyPair
+    url+="&interval="
     url+=selection
     fail=1
     while (fail==1):
@@ -42,7 +44,7 @@ def XMRUSD(selection,dataToReturn):
             fail=1
             pass 
         time.sleep(5)
-    for x in (resp.json()['result']['XXMRZUSD']):
+    for x in (resp.json()['result'][CurrencyNickname]):
         data.append(x)
     if (dataToReturn=='all'):
         return data
@@ -63,7 +65,6 @@ def XMRUSD(selection,dataToReturn):
         return alt
 
 def ListToJPEG(data,filename):
-    print ("Generating Image")
     newData=[]
     for i in range(len(data)):
         if (i>=(len(data)-101)):
