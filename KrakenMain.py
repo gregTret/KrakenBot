@@ -6,7 +6,6 @@ from Handler import *
 import subprocess
 
 
-
 # Kraken API Public and Private Key
 # key= yourpublickey
 # privateKey= yourprivatekey
@@ -15,13 +14,10 @@ import subprocess
 pair=["XMRUSD","ETHUSD","DOTUSD"]
 minSellAdjustment=[1.01,1.01,1.01]
 amount=[0.1,0.01,1.00]
-
 # Risk Level (1= Very High , 5 = High , 15 = Medium, 30 = Low, 60 = Lowest)
 barsToUse=5
-
 #Time Between Request Batches
-minutes=5
-
+timeControl=5
 
 # Setting Directories up
 directory_path = os.getcwd()
@@ -55,7 +51,7 @@ while (KrakenStatus()==0):
             # Not Purchasing, Simply Showing Price
             print ("Current Price of "+pair[x]+":"+str(latest[len(latest)-1]))
 
-
+    minutes=timeControl
     print ("Waiting Until Next Batch for "+str(minutes)+ " Minutes")
     for i in range(minutes):
         time.sleep(60)
