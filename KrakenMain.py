@@ -6,14 +6,21 @@ from Handler import *
 import subprocess
 
 
+
 # Kraken API Public and Private Key
 # key= yourpublickey
 # privateKey= yourprivatekey
 
 # Crypto[=currency Pair to Buy/Sell and Desired Amount
 pair=["XMRUSD","ETHUSD","DOTUSD"]
-minSellAdjustment=[1.013,1.014,1.016]
-amount=[0.2,0.02,1.00]
+minSellAdjustment=[1.01,1.01,1.01]
+amount=[0.1,0.01,1.00]
+
+# Risk Level (1= Very High , 5 = High , 15 = Medium, 30 = Low, 60 = Lowest)
+barsToUse=5
+
+#Time Between Request Batches
+minutes=5
 
 
 # Setting Directories up
@@ -26,7 +33,7 @@ while (KrakenStatus()==0):
         # Time Buffer for Requests
         time.sleep(5)
         # Getting Prices of Currency Pairs
-        latest=getCurrentPrice(15, 'average', pair[x])
+        latest=getCurrentPrice(barsToUse, 'average', pair[x])
         # Converting list to JPEG
         ListToJPEG(latest,testLocation)
         # Classifying Image bassed on Model
@@ -48,8 +55,7 @@ while (KrakenStatus()==0):
             # Not Purchasing, Simply Showing Price
             print ("Current Price of "+pair[x]+":"+str(latest[len(latest)-1]))
 
-    # Waiting Until Next Request Batch   
-    minutes=3
+
     print ("Waiting Until Next Batch for "+str(minutes)+ " Minutes")
     for i in range(minutes):
         time.sleep(60)
