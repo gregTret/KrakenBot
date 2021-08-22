@@ -10,11 +10,11 @@ import subprocess
 # key= yourpublickey
 # privateKey= yourprivatekey
 
-# Cryptocurrency Pair to Buy/Sell and Desired Amount
+# Crypto[=currency Pair to Buy/Sell and Desired Amount
 pair=["XMRUSD","ETHUSD","DOTUSD"]
-currencyNickname=["XXMRZUSD","XETHZUSD","DOTUSD"]
-amount=[0.10,0.015,1.00]
-minSellAdjustment=[1.013,1.014,1.02]
+minSellAdjustment=[1.013,1.014,1.016]
+amount=[0.2,0.02,1.00]
+
 
 # Setting Directories up
 directory_path = os.getcwd()
@@ -26,7 +26,7 @@ while (KrakenStatus()==0):
         # Time Buffer for Requests
         time.sleep(5)
         # Getting Prices of Currency Pairs
-        latest=getCurrentPrice(15, 'average', pair[x], currencyNickname[x])
+        latest=getCurrentPrice(15, 'average', pair[x])
         # Converting list to JPEG
         ListToJPEG(latest,testLocation)
         # Classifying Image bassed on Model
@@ -49,7 +49,7 @@ while (KrakenStatus()==0):
             print ("Current Price of "+pair[x]+":"+str(latest[len(latest)-1]))
 
     # Waiting Until Next Request Batch   
-    minutes=5
+    minutes=3
     print ("Waiting Until Next Batch for "+str(minutes)+ " Minutes")
     for i in range(minutes):
         time.sleep(60)

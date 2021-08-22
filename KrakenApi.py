@@ -27,7 +27,7 @@ def KrakenStatus():
         return 3
 
 #Get Current Trade data (Time interval to use/Columns to return)
-def getCurrentPrice(selection,dataToReturn,currencyPair,CurrencyNickname):
+def getCurrentPrice(selection,dataToReturn,currencyPair):
     data=[]
     selection=str(selection)
     url="https://api.kraken.com/0/public/OHLC?pair="
@@ -44,7 +44,9 @@ def getCurrentPrice(selection,dataToReturn,currencyPair,CurrencyNickname):
             fail=1
             pass 
         time.sleep(5)
-    for x in (resp.json()['result'][CurrencyNickname]):
+    nickname= str(resp.json()['result'])
+    nickname=nickname.split('\'')
+    for x in (resp.json()['result'][nickname[1]]):
         data.append(x)
     if (dataToReturn=='all'):
         return data
