@@ -36,7 +36,7 @@ while (KrakenStatus()==0):
         if (ClassifyImage(modelLocation, testLocation)==1):
             print (pair[x]+" is Low Currently At: "+str(latest[len(latest)-1]))
             # Optional Notification When making a purchase/sale
-            subprocess.call(["notify-send",'Testing Notifications',"Go Check Kraken out", '-u','critical'])
+            # subprocess.call(["notify-send",'Testing Notifications',"Go Check Kraken out", '-u','critical'])
             # Making a Market Purchase
             MarketBuy(key,privateKey,amount[x],pair[x])
             priceApprox=float(latest[len(latest)-1])*minSellAdjustment[x]
