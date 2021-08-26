@@ -50,7 +50,7 @@ def TestModel(modelDirectory,directoryName):
     optimizer = optim.Adam(model.parameters(), lr=learning_rate) 
     check_accuracy(test_loader, model)
 
-def ClassifyImage(modelLocation,testLocation):
+def ClassifyImage(modelLocation,testLocation,deviceUsedForModel):
     # Disabling Warnings
     warnings.simplefilter(action='ignore', category=FutureWarning)
     warnings.simplefilter(action='ignore', category=UserWarning)
@@ -59,7 +59,7 @@ def ClassifyImage(modelLocation,testLocation):
     # Loading Trained Model
     model.load_state_dict(torch.load(modelLocation),strict=False)
      # Setting Device 
-    device = torch.device ('cuda' if torch.cuda.is_available() else 'cpu')
+    device = deviceUsedForModel
     model.to(device)
     # Setting model to eval mode
     model.eval()

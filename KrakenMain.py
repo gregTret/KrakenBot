@@ -10,14 +10,17 @@ import subprocess
 # privateKey= yourprivatekey
 
 # Crypto[=currency Pair to Buy/Sell and Desired Amount
-pair=["XMRUSD","ETHUSD","DOTUSD"]
-minSellAdjustment=[1.01,1.01,1.01]
-amount=[0.1,0.01,1.00]
+pair=["XMRUSD","ETHUSD"]
+minSellAdjustment=[1.01,1.01]
+amount=[0.1,0.01]
 
 # Risk Level (1= Very High , 5 = High , 15 = Medium, 30 = Low, 60 = Lowest)
-barsToUse=5
-#Time Between Request Batches
+barsToUse=60
+# Time Between Request Batches
 timeControl=5
+# Device used to generate models: by default set to CPU
+deviceUsedToModel='cpu'
+
 
 # Setting Directories up
 directory_path = os.getcwd()
@@ -33,7 +36,7 @@ while (KrakenStatus()==0):
         # Converting list to JPEG
         ListToJPEG(latest,testLocation)
         # Classifying Image bassed on Model
-        if (ClassifyImage(modelLocation, testLocation)==1):
+        if (ClassifyImage(modelLocation, testLocation,deviceUsedToModel)==1):
             print (pair[x]+" is Low Currently At: "+str(latest[len(latest)-1]))
             # Optional Notification When making a purchase/sale
             # subprocess.call(["notify-send",'Testing Notifications',"Go Check Kraken out", '-u','critical'])
