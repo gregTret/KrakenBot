@@ -11,7 +11,7 @@ import shutil
 # privateKey= yourprivatekey
 
 # Crypto[=currency Pair to Buy/Sell and Desired Amount
-pair=["XMRUSD","ETHUSD"]
+pair=["XMRUSD","ETHUSD"] 
 minSellAdjustment=[1.01,1.01]
 amount=[0.1,0.01]
 
