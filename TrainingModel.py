@@ -5,15 +5,17 @@ import torchvision.transforms as transforms
 import torchvision
 from torch.utils.data import DataLoader
 from CustomDataset import newDataSet
-import torch.nn.functional as F
+import torch.nn.functional as Fpython
 import warnings
 from datetime import datetime,timezone
 
 warnings.simplefilter(action='ignore', category=FutureWarning)
 warnings.simplefilter(action='ignore', category=UserWarning)
 
+
 def TrainModel(root_directory,saveLocation,numEpochs):
     device = torch.device ('cuda' if torch.cuda.is_available() else 'cpu')
+    device='cpu'
     print ("Using:",device)
     in_channel=3
     num_classes=2
@@ -67,7 +69,7 @@ def TrainModel(root_directory,saveLocation,numEpochs):
                 _, predictions = scores.max(1)
                 num_correct += (predictions == y).sum()
                 num_samples += predictions.size(0)
-                # print (predictions)
+                print (predictions)
             print(
                 f"Got {num_correct} / {num_samples} with accuracy {float(num_correct)/float(num_samples)*100:.2f}"
             )
@@ -78,3 +80,12 @@ def TrainModel(root_directory,saveLocation,numEpochs):
     check_accuracy(test_loader, model)
 
     torch.save(model.state_dict(), saveLocation)
+
+import os
+numberOfEpochs=20
+directory_path = os.getcwd()
+mainDataDirectory=directory_path+'/data/'
+testSaveDirectory=directory_path+'/generatedData/'
+modelSaveLocation=directory_path+'/generatedModels/model.pth'
+extraTestLocation=directory_path+'/tests/'
+TrainModel(testSaveDirectory+'set/',modelSaveLocation,numberOfEpochs)

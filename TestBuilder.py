@@ -6,6 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 
+
 def BuildTest(directory,saveDirectory):
     def ftl(filename1):
         f=open(filename1,'r')
@@ -28,7 +29,6 @@ def BuildTest(directory,saveDirectory):
                 ltf('set/'+str(gfc),test)
                 gfc+=1 
         return (gfc)
-
     os.chdir(saveDirectory)
     try:
         os.mkdir(saveDirectory+'set')
@@ -71,9 +71,9 @@ def BuildTest(directory,saveDirectory):
 
     def imgGen(filename,df):
         df.data.plot()
-        plt.savefig(filename,dpi=30)
+        # plt.savefig(filename,dpi=30)
         # For Fullsize Images
-        # plt.savefig(filename)
+        plt.savefig(filename)
         plt.clf()
 
     def generate(data,gfc):
