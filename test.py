@@ -1,5 +1,6 @@
-from KrakenBot import KrakenController as kc
-from KrakenBot import HelperFunctions as hp
+from KrakenBot.Helper import HelperFunctions
+from KrakenBot import KrakenController as KrakenController
+from KrakenBot import HelperFunctions as HelperFunctions
 import os
 
 # Kraken API Public and Private Key
@@ -25,5 +26,7 @@ modelLocation=directory_path+'/generatedModels/overtrained_model.pth'
 testLocation=directory_path+'/tests/tmp.jpeg'
 classificationSave=directory_path+'/tests'
 
-hp.SetupDirectories(directory_path)
-kc.saveClassifications(pair,barsToUse,timeControl,testLocation,classificationSave,modelLocation,deviceUsedToModel,counter)
+HelperFunctions.SetupDirectories(directory_path)
+KrakenController.evaluationMode(pair,barsToUse,timeControl,testLocation,classificationSave,modelLocation,deviceUsedToModel,counter)
+KrakenController.tradingBot(key,privateKey,pair,amount,minSellAdjustment,barsToUse,timeControl,testLocation,classificationSave,modelLocation,deviceUsedToModel,counter)
+
