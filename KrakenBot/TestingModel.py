@@ -9,6 +9,8 @@ import torch.nn.functional as F
 from PIL import Image
 from os import walk
 from .CustomDataset import newDataSet
+from .Helper import HelperFunctions as hp
+import shutil
 
 class TestingModel:
     def TestModel(modelDirectory,directoryName,specificFolder):
@@ -77,3 +79,28 @@ class TestingModel:
         output = model(image_tensor)
         index = output.data.cpu().numpy().argmax()
         return (index)
+
+    # def ClassifyImagesInDirectory(modelLocation,directory,deviceUsedForModel):
+    #     data=[]
+    #     counter=0
+    #     sd=next(walk(directory),(None, None, []))[2]
+    #     hp.CreateImageFolders(directory)
+    #     for x in sd:
+    #         if (x[0]=='n'):
+    #             shutil.move(directory +'/'+ x, directory+'/nothing/'+x)
+    #         elif (x[0]=='b'):
+    #             shutil.move(directory +'/'+ x, directory+'/buy/'+x)
+    #         elif (x[0]=='s'):
+    #             shutil.move(directory +'/'+ x, directory+'/sell/'+x)
+    #     hp.CSVBuilderClassification(directory)
+    #     quit()
+    #     directoryList=[directory+'/nothing/',directory+'/buy/',directory+'/sell/']
+    #     for x in directoryList:
+    #         sd=next(walk(x),(None, None, []))[2]
+    #         for i in sd:
+    #             tmp=[]
+    #             tmp.append(i)
+    #             tmp.append(str(counter))
+    #             data.append(tmp)
+    #         counter+=1
+    #     hp.D2listToCSV(data,directory+"/classifications.csv")

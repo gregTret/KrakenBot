@@ -2,45 +2,29 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import os
 from os import walk
+import shutil
 
 # Functions used across multiple files
 class HelperFunctions():
+    def CreateImageFolders(path):
+        try:
+            os.mkdir(path+'/buy')
+            os.mkdir(path+'/sell')
+            os.mkdir(path+'/nothing')
+            status=0
+        except:
+            pass
+
     def SetupDirectories(currentPath):
         status=1
         try:
             os.mkdir(currentPath+'/data')
-            print("Directory "+currentPath+'/data Successfully Created')
-            status=0
-        except:
-            print("Directory "+currentPath+'/data Already Exists')
-            pass
-        try:
             os.mkdir(currentPath+'/generatedData')
-            print("Directory "+currentPath+'/generatedData Successfully Created')
-            status=0
-        except:
-            print("Directory "+currentPath+'/generatedData Already Exists')
-            pass
-        try:
             os.mkdir(currentPath+'/generatedModels')
-            print("Directory "+currentPath+'/generatedModels Successfully Created')
-            status=0
-        except:
-            print("Directory "+currentPath+'/generatedModels Already Exists')
-            pass
-        try:
             os.mkdir(currentPath+'/tests')
-            print("Directory "+currentPath+'/tests Successfully Created')
-            status=0
-        except:
-            print("Directory "+currentPath+'/tests Already Exists')
-            pass
-        try:
             os.mkdir(currentPath+'/logs')
-            print("Directory "+currentPath+'/logs Successfully Created')
             status=0
         except:
-            print("Directory "+currentPath+'/logs Already Exists')
             pass
         return status
 
@@ -74,6 +58,29 @@ class HelperFunctions():
                 data.append(tmp)
             counter+=1
         HelperFunctions.D2listToCSV(data,directory+"/classifications.csv")
+
+    def SplitImagesFromFolders(directory):
+        directoryList=[directory+'/nothing/',directory+'/buy/',directory+'/sell/']
+        for x in directoryList:
+            sd=next(walk(x),(None, None, []))[2]
+            for i in sd:
+                pass
+                # Line Broken
+                # shutil.move(x + i, directory+'/images/'+i)
+
+    def sortDifferentNames(directory,identifier):
+        data=[]
+        counter=0
+        sd=next(walk(directory),(None, None, []))[2]
+        HelperFunctions.CreateImageFolders(directory)
+        for x in sd:
+            if (x[0]=='n'):
+                shutil.move(directory +'/'+ x, directory+'/nothing/'+identifier+x)
+            elif (x[0]=='b'):
+                shutil.move(directory +'/'+ x, directory+'/buy/'+identifier+x)
+            elif (x[0]=='s'):
+                shutil.move(directory +'/'+ x, directory+'/sell/'+identifier+x)
+        HelperFunctions.CSVBuilderClassification(directory)
 
     def ftl(filename1):
         f=open(filename1,'r')

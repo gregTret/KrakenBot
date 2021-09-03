@@ -1,6 +1,9 @@
-from KrakenBot.Helper import HelperFunctions
+import KrakenBot
 from KrakenBot import KrakenController as KrakenController
 from KrakenBot import HelperFunctions as HelperFunctions
+from KrakenBot import TestingModel as TestingModel
+from KrakenBot import TestBuilder
+from KrakenBot import TrainingModel as TrainModel
 import os
 
 # Kraken API Public and Private Key
@@ -16,17 +19,22 @@ amount=[0.1,0.01]
 barsToUse=60
 # Time Between Request Batches
 timeControl=10
-counter=1519
+counter=1530
 # Device used to generate models: by default set to cpu
 deviceUsedToModel='cpu'
+numEpochs=20
 
 # Setting Directories up
 directory_path = os.getcwd()+'/KrakenBot'
-modelLocation=directory_path+'/generatedModels/overtrained_model.pth'
+trainingPath=directory_path+'/generatedData/set/'
+modelLocation=directory_path+'/generatedModels/1.1.pth'
+modelSaveLocation=directory_path+'/generatedModels/new_model.pth'
 testLocation=directory_path+'/tests/tmp.jpeg'
 classificationSave=directory_path+'/tests'
 
-HelperFunctions.SetupDirectories(directory_path)
+# HelperFunctions.SetupDirectories(directory_path)
+# TrainModel.train(trainingPath,modelSaveLocation,numEpochs)
+# HelperFunctions.CSVBuilderClassification(classificationSave)
 KrakenController.evaluationMode(pair,barsToUse,timeControl,testLocation,classificationSave,modelLocation,deviceUsedToModel,counter)
-KrakenController.tradingBot(key,privateKey,pair,amount,minSellAdjustment,barsToUse,timeControl,testLocation,classificationSave,modelLocation,deviceUsedToModel,counter)
+# KrakenController.tradingBot(key,privateKey,pair,amount,minSellAdjustment,barsToUse,timeControl,testLocation,classificationSave,modelLocation,deviceUsedToModel,counter)
 

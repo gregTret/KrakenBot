@@ -5,7 +5,8 @@ import csv
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
-import Helper as hp
+
+from .Helper import HelperFunctions as hp
 
 class TestBuilder:
     def BuildTest(directory,saveDirectory,imageSize):

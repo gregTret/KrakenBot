@@ -8,6 +8,7 @@ from .TestingModel import TestingModel as tm
 
 class KrakenController():
     def evaluationMode(pair,barsToUse,timeControl,testLocation,classificationSave,modelLocation,deviceUsedToModel,counter):
+        hp.CreateImageFolders(classificationSave)
         while (ka.KrakenStatus()==0):
             for x in range (len(pair)):
                 # Getting Prices of Currency Pairs

@@ -7,10 +7,11 @@ from torch.utils.data import DataLoader
 import torch.nn.functional as Fpython
 import warnings
 from datetime import datetime,timezone
+
 from .CustomDataset import newDataSet
 
 class TrainingModel:
-    def TrainModel(root_directory,saveLocation,numEpochs):
+    def train(root_directory,saveLocation,numEpochs):
         warnings.simplefilter(action='ignore', category=FutureWarning)
         warnings.simplefilter(action='ignore', category=UserWarning)
         device = torch.device ('cuda' if torch.cuda.is_available() else 'cpu')
