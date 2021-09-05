@@ -13,15 +13,15 @@ privateKey= 'yourprivatekey'
 # Crypto[=currency Pair to Buy/Sell and Desired Amount
 pair=["XMRUSD","ETHUSD"] 
 minSellAdjustment=[1.01,1.01]
-amount=[0.1,0.00]
+amount=[0.1,0.01]
 
 # Risk Level (1= Very High , 5 = High , 15 = Medium, 30 = Low, 60 = Lowest)
 barsToUse=60
 
 # Time Between Request Batches
 timeControl=10
-counter=1787
-# Device used to generate models: by default set to cpu
+counter=1932
+# Device used to generate models: by default set to cpu 
 deviceUsedToModel='cpu'
 numEpochs=20
 
@@ -37,7 +37,6 @@ modelLocation=(KrakenBot.__path__[0])+'/generatedModels/1.1.pth'
 
 
 HelperFunctions.SetupDirectories(directory_path)
-
 
 # TrainModel.train(trainingPath,modelSaveLocation,numEpochs)
 # HelperFunctions.CSVBuilderClassification(classificationSave)

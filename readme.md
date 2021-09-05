@@ -1,55 +1,19 @@
 ## Kraken Cryptocurrency Trading with Pytorch
->Built with and tested on Python 3.8 
+>Built with and tested on Python 3.8 <br>
+>Using CUDA 11.1
+
 <h3> Essential Setup Instructions </h3>
 
 1. Install required Packages. 
 Checkout https://pytorch.org/get-started/locally/ for the best Torch installation for your machine. 
-Enabling Cuda (GPU) as your device is strongly recommended as it will make testing and training much more efficient. 
+Enabling Cuda (GPU) as your device is strongly recommended.
 
-2) Run main.py for first time setup
-
-<h3> Kraken Setup </h3>
-
-1. Update your private and public keys inside of KrakenMain.py.
-
-2. Configure the variable lists at the top of KrakenMain.py to reflect your own objectives and risk tolerence.
-
-3. Run KrakenMain.py and enjoy!
-
-<h3> Build Your Own Model Instructions </h3>
-
-1. Place Organized Data into the GeneratedData folder.
-
-2. Call the "TrainModel" function from main.py. Your model is saved by default in "./generatedModels/model.pth".
-
-<h3> Build Your Own Dataset Instructions </h3>
-
-1.  Add file(s) to the "data" folder with your desired testing data. Run the "BuildTest" function inside of main.py to generate testing sets. These testing sets can be used to train models.
-
-2. Unfortunately, this is not enough to generate good dataset. The generation of good datasets is a mixture of manual and automatic classification, and is a process that is still undergoing improvements. 
-
-
-Required Python Packages
-
-
->numpy<br>
-torch<br>
-scikit-image <br>
-pandas<br>
-matplotlib <br>
-pillow <br>
-requests
-
-
-
-
-
-<h3>Linux Package Installation: </h3>
+<h3> Required Packages: </h3>
 
 ```bash
 pip3 install numpy
 
-pip3 install torch torchvision torchaudio
+pip3 install torch==1.9.0+cu111 torchvision==0.10.0+cu111 torchaudio==0.9.0 -f https://download.pytorch.org/whl/torch_stable.html
 
 pip3 install scikit-image
 
@@ -61,20 +25,27 @@ pip3 install pillow
 
 pip3 install requests
 ```
-<h3>Windows Package Installation: </h3>
 
-```bash
-pip3 install numpy
 
-pip3 install torch==1.9.0+cu102 torchvision==0.10.0+cu102 torchaudio===0.9.0 -f https://download.pytorch.org/whl/torch_stable.html
+## Setup
 
-pip3 install scikit-image
+1. Update your private and public keys inside of test.py.
 
-pip3 install pandas
+2. Run test.py, call KrakenController.evaluationMode() to evaluate the model or KrakenController.tradingBot() to enable live trading.
 
-pip3 install matplotlib
+<br>
 
-pip3 install pillow
+## Optional Setup
 
-pip3 install requests
-```
+<h3> Build Your Own Dataset and Model Instructions </h3>
+
+1.  Add file(s) to the "data" folder with your desired testing data. Run TestBuilder.BuildTest() to generate the image files.
+
+2. Once the image files are generated you can classify them using the TestingModel.ClassifyImages() function, and store the results inside of one of thee folders within the './tests/' directory. The function also creates a 'classifications.csv' file which holds the classification information for each image. You can review these manually to verify the model.
+
+3. Once the classifications are verified, you can move all the images from the three folders into a single 'images' folder and move it along with the 'classifications.csv' folder into the 'generatedData' folder. 
+
+4. Running the TrainingModel.train() function with reference to the newly generated data folder will create a new custom model. This model will by default be saved under '/generatedModels/new_model.pth'.
+
+
+

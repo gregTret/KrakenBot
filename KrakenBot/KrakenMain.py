@@ -52,9 +52,10 @@ class KrakenController():
                     print (pair[x]+" is High Currently At (SELL TIME): "+str(latest[len(latest)-1]))
                     shutil.move(testLocation, classificationSave+'/sell/' +str(counter)+pair[x]+'.jpeg')
                     if (KrakenController.approveSale(pair[x],minSellAdjustment[x],holdingSummaryLocation)==1):
+                        amountToSell=KrakenController.getHoldingAmount(pair[x],holdingSummaryLocation)
                         ka.MarketSell(key,privateKey,amount[x],pair[x])
-                        KrakenController.updateMainLog('SELL',pair[x],amount[x],logFileLocation)
-                        KrakenController.logSale(pair[x],amount[x],holdingSummaryLocation)
+                        KrakenController.updateMainLog('SELL',pair[x],amountToSell,logFileLocation)
+                        KrakenController.logSale(pair[x],amountToSell,holdingSummaryLocation)
                         print ("Sold Around: ",str(latest[len(latest)-1]))
                 else:
                     print ("Current Price of "+pair[x]+":"+str(latest[len(latest)-1]))
@@ -107,7 +108,7 @@ class KrakenController():
                 cost=float(data[x].split(',')[2])
                 newAmount=amountHeld-float(amount)
                 result=str(pair)+','+str(newAmount)+','+str(cost)
-                holdings.append(result)
+                # holdings.append(result)
             else:
                 holdings.append(data[x])
         hp.ltf(holdingSummaryLocation,holdings)
@@ -136,3 +137,10 @@ class KrakenController():
             return 1
         else:
             return 0
+    
+    def getHoldingAmount(pair,holdingSummaryLocation):
+        data=hp.holdingCheck(holdingSummaryLocation)
+        for x in range(len(data)):
+            if(data[x].split(',')[0]==pair):
+                return(float(data[x].split(',')[1]))
+                
