@@ -7,7 +7,6 @@ from torch.utils.data import DataLoader
 import torch.nn.functional as Fpython
 import warnings
 from datetime import datetime,timezone
-
 from .CustomDataset import newDataSet
 
 class TrainingModel:

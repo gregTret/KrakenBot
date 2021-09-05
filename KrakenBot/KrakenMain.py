@@ -11,11 +11,8 @@ class KrakenController():
         hp.CreateImageFolders(classificationSave)
         while (ka.KrakenStatus()==0):
             for x in range (len(pair)):
-                # Getting Prices of Currency Pairs
                 latest=ka.getCurrentPrice(barsToUse, 'average', pair[x])
-                # Converting list to JPEG
                 hp.ListToJPEG(latest,testLocation)
-                # Classifying Image bassed on Model
                 classification=tm.ClassifyImage(modelLocation, testLocation,deviceUsedToModel)
                 if (classification==1):
                     print (pair[x]+" is Low Currently At (BUY TIME): "+str(latest[len(latest)-1]))
@@ -35,42 +32,107 @@ class KrakenController():
                 minutes-=1
                 print ("Waiting for "+str(minutes)+ " Minutes")
 
-    def tradingBot(key,privateKey,pair,amount,minSellAdjustment,barsToUse,timeControl,testLocation,classificationSave,modelLocation,deviceUsedToModel,counter):
+    def tradingBot(key,privateKey,pair,amount,minSellAdjustment,barsToUse,timeControl,testLocation,classificationSave,modelLocation,logFileLocation,holdingSummaryLocation,deviceUsedToModel,counter):
          while (ka.KrakenStatus()==0):
             for x in range (len(pair)):
-                # Getting Prices of Currency Pairs
                 latest=ka.getCurrentPrice(barsToUse, 'average', pair[x])
-                # Converting list to JPEG
                 hp.ListToJPEG(latest,testLocation)
-                # Classifying Image bassed on Model
                 classification=tm.ClassifyImage(modelLocation, testLocation,deviceUsedToModel)
-                # Update me---------------------------------------------------------------------
                 if (classification==1):
                     print (pair[x]+" is Low Currently At (BUY TIME): "+str(latest[len(latest)-1]))
                     shutil.move(testLocation, classificationSave+'/buy/' +str(counter)+pair[x]+'.jpeg')
-                    # Making a Market Purchase
-                    ka.MarketBuy(key,privateKey,amount[x],pair[x])
-                    priceApprox=float(latest[len(latest)-1])*minSellAdjustment[x]
-                    priceApprox=round(priceApprox, 2)
-                    print ("Bought around: ",str(latest[len(latest)-1]))
-                    print ("Selling at: ",str(priceApprox))
-                    time.sleep(5)
-                    # Making a Limit Sale 
-                    ka.LimitSell(key,privateKey,amount[x],pair[x],priceApprox)
+                    if (KrakenController.approvePurchase(pair[x],minSellAdjustment[x],holdingSummaryLocation)==1):
+                        ka.MarketBuy(key,privateKey,amount[x],pair[x])
+                        KrakenController.updateMainLog('BUY',pair[x],amount[x],logFileLocation)
+                        KrakenController.logPurchase(pair[x],amount[x],holdingSummaryLocation)
+                        priceApprox=float(latest[len(latest)-1])*minSellAdjustment[x]
+                        priceApprox=round(priceApprox, 2)
+                        print ("Bought around: ",str(latest[len(latest)-1]))
                 elif (classification==2):
                     print (pair[x]+" is High Currently At (SELL TIME): "+str(latest[len(latest)-1]))
                     shutil.move(testLocation, classificationSave+'/sell/' +str(counter)+pair[x]+'.jpeg')
+                    if (KrakenController.approveSale(pair[x],minSellAdjustment[x],holdingSummaryLocation)==1):
+                        ka.MarketSell(key,privateKey,amount[x],pair[x])
+                        KrakenController.updateMainLog('SELL',pair[x],amount[x],logFileLocation)
+                        KrakenController.logSale(pair[x],amount[x],holdingSummaryLocation)
+                        print ("Sold Around: ",str(latest[len(latest)-1]))
                 else:
-                    # Not Purchasing, Simply Showing Price
                     print ("Current Price of "+pair[x]+":"+str(latest[len(latest)-1]))
                     shutil.move(testLocation, classificationSave+'/nothing/' +str(counter)+pair[x]+'.jpeg')
-                # Update me---------------------------------------------------------------------
                 counter+=1
                 print (counter)
-
             minutes=timeControl
             print ("Waiting Until Next Batch for "+str(minutes)+ " Minutes")
             for i in range(minutes):
                 time.sleep(60)
                 minutes-=1
                 print ("Waiting for "+str(minutes)+ " Minutes")
+
+    def updateMainLog(action,pair,amount,logFileLocation):
+        lastPrice=ka.getCurrentPrice(1, 'lastOnly', pair)
+        data=str(action)+','+str(lastPrice)+','+str(amount)
+        hp.appendToFile(logFileLocation,data)
+    
+    def logPurchase(pair,amount,holdingSummaryLocation):
+        holdings=[]
+        exists=0
+        lastPrice=ka.getCurrentPrice(1, 'lastOnly', pair)
+        data=hp.holdingCheck(holdingSummaryLocation)
+        for x in range(len(data)):
+            if(data[x].split(',')[0]==pair):
+                exists=1
+                amountHeld=float(data[x].split(',')[1])
+                cost=float(data[x].split(',')[2])
+                cost=amountHeld*cost
+                newAmount=float(amount)
+                newCost=float(lastPrice)*newAmount
+                newCost+=cost
+                newAmount=newAmount+amountHeld
+                newCost=newCost/newAmount
+                result=str(pair)+','+str(newAmount)+','+str(newCost)
+                holdings.append(result)
+            else:
+                holdings.append(data[x])
+        if (exists==0):
+            result=str(pair)+','+str(amount)+','+str(lastPrice)
+            holdings.append(result)
+        hp.ltf(holdingSummaryLocation,holdings)
+    
+    def logSale(pair,amount,holdingSummaryLocation):
+        holdings=[]
+        data=hp.holdingCheck(holdingSummaryLocation)
+        for x in range(len(data)):
+            if(data[x].split(',')[0]==pair):
+                amountHeld=float(data[x].split(',')[1])
+                cost=float(data[x].split(',')[2])
+                newAmount=amountHeld-float(amount)
+                result=str(pair)+','+str(newAmount)+','+str(cost)
+                holdings.append(result)
+            else:
+                holdings.append(data[x])
+        hp.ltf(holdingSummaryLocation,holdings)
+    
+    def approvePurchase(pair,holdingSummaryLocation):
+        lastPrice=ka.getCurrentPrice(1, 'lastOnly', pair)
+        data=hp.holdingCheck(holdingSummaryLocation)
+        for x in range(len(data)):
+            if(data[x].split(',')[0]==pair):
+                cost=float(data[x].split(',')[2])
+                if (lastPrice>=cost*0.985):
+                    return 0
+        return 1
+
+    def approveSale(pair,minimumProfit,holdingSummaryLocation):
+        entryExists=0
+        lastPrice=ka.getCurrentPrice(1, 'lastOnly', pair)
+        data=hp.holdingCheck(holdingSummaryLocation)
+        for x in range(len(data)):
+            if(data[x].split(',')[0]==pair):
+                entryExists=1
+                cost=float(data[x].split(',')[2])
+                if (lastPrice<=cost*minimumProfit):
+                    return 0
+        if (entryExists==1):
+            return 1
+        else:
+            return 0

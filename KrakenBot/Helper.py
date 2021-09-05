@@ -26,6 +26,14 @@ class HelperFunctions():
             status=0
         except:
             pass
+        try:
+            f = open(currentPath+'/logs/logs.txt', 'a')
+            f.close()
+            f = open(currentPath+'/logs/holdings.txt', 'a')
+            f.close()
+        except:
+            print ("Failed to create Log Files.")
+            pass     
         return status
 
     def ListToJPEG(data,filename):
@@ -89,6 +97,14 @@ class HelperFunctions():
         for line in lines:
             data.append(float(line.replace("\n", "")))
         return data
+    
+    def holdingCheck(filename):
+        f=open(filename,'r')
+        lines = f.readlines()
+        data=[]
+        for line in lines:
+            data.append(line.replace("\n", ""))
+        return data
 
     def dtf(filename,data):
         f=open(filename,'w+')
@@ -99,6 +115,11 @@ class HelperFunctions():
         f=open(filename,'w+')
         for x in data:
             f.write(str(x)+'\n')
+        f.close()
+    
+    def appendLineToFile(filename,data):
+        f=open(filename,'a')
+        f.write(str(data)+'\n')
         f.close()
 
     def generateDataChunks(data,gfc):

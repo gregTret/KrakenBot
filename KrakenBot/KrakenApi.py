@@ -39,6 +39,7 @@ class KrakenApiRequests:
                 fail=0
             except:
                 print ("Failed to get Data, trying again")
+                time.sleep(2)
                 fail=1
                 pass 
             time.sleep(5)
@@ -66,7 +67,11 @@ class KrakenApiRequests:
                 temp.append(float(data[x][3]))
                 alt.append(temp)
             return alt
-
+        elif (dataToReturn=='lastOnly'):
+            for x in range (len(data)):
+                alt.append(float(data[x][2]))
+            return alt[len(alt)-1]
+            
     def get_kraken_signature(urlpath, data, secret):
         postdata = urllib.parse.urlencode(data)
         encoded = (str(data['nonce']) + postdata).encode()
@@ -90,6 +95,19 @@ class KrakenApiRequests:
             "nonce": str(int(1000*time.time())),
             "ordertype": "market",
             "type": "buy",
+            "volume": amount,
+            "pair": cryptoPair
+        }, api_key, api_sec, api_url)
+        print(resp.json())
+
+    def MarketSell(apiKey,apiKeyPrivate,amount,cryptoPair):
+        api_url = "https://api.kraken.com"
+        api_key = apiKey
+        api_sec = apiKeyPrivate
+        resp = KrakenApiRequests.kraken_request('/0/private/AddOrder', {
+            "nonce": str(int(1000*time.time())),
+            "ordertype": "market",
+            "type": "sell",
             "volume": amount,
             "pair": cryptoPair
         }, api_key, api_sec, api_url)
