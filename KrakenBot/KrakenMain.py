@@ -33,6 +33,7 @@ class KrakenController():
                 print ("Waiting for "+str(minutes)+ " Minutes")
 
     def tradingBot(key,privateKey,pair,amount,minSellAdjustment,barsToUse,timeControl,testLocation,classificationSave,modelLocation,logFileLocation,holdingSummaryLocation,deviceUsedToModel,counter):
+         hp.CreateImageFolders(classificationSave)
          while (ka.KrakenStatus()==0):
             for x in range (len(pair)):
                 latest=ka.getCurrentPrice(barsToUse, 'average', pair[x])
@@ -41,7 +42,7 @@ class KrakenController():
                 if (classification==1):
                     print (pair[x]+" is Low Currently At (BUY TIME): "+str(latest[len(latest)-1]))
                     shutil.move(testLocation, classificationSave+'/buy/' +str(counter)+pair[x]+'.jpeg')
-                    if (KrakenController.approvePurchase(pair[x],minSellAdjustment[x],holdingSummaryLocation)==1):
+                    if (KrakenController.approvePurchase(pair[x],holdingSummaryLocation)==1):
                         ka.MarketBuy(key,privateKey,amount[x],pair[x])
                         KrakenController.updateMainLog('BUY',pair[x],amount[x],logFileLocation)
                         KrakenController.logPurchase(pair[x],amount[x],holdingSummaryLocation)
@@ -72,7 +73,7 @@ class KrakenController():
     def updateMainLog(action,pair,amount,logFileLocation):
         lastPrice=ka.getCurrentPrice(1, 'lastOnly', pair)
         data=str(action)+','+str(lastPrice)+','+str(amount)
-        hp.appendToFile(logFileLocation,data)
+        hp.appendLineToFile(logFileLocation,data)
     
     def logPurchase(pair,amount,holdingSummaryLocation):
         holdings=[]
