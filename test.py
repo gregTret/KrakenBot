@@ -11,15 +11,16 @@ key= 'yourpublickey'
 privateKey= 'yourprivatekey'
 
 # Crypto[=currency Pair to Buy/Sell and Desired Amount
-pair=["XMRUSD","ETHUSD","LTCUSD","DOGEUSD"] 
-minSellAdjustment=[1.01,1.01,1.01,1.01]
-amount=[0.1,0.01,0.05,50]
+pair=["XMRUSD","LTCUSD"] 
+minSellAdjustment=[1.01,1.01]
+amount=[0.1,0.05]
 
 # Risk Level (1= Very High , 5 = High , 15 = Medium, 30 = Low, 60 = Lowest)
 barsToUse=15
 # Time Between Request Batches
 timeControl=5
-counter=2308
+counter=2784
+maximumHoldingsValue=500
 
 # Device used to generate models: by default set to cpu 
 deviceUsedToModel='cpu'
@@ -39,5 +40,5 @@ HelperFunctions.SetupDirectories(directory_path)
 # TrainModel.train(trainingPath,modelSaveLocation,numEpochs)
 # HelperFunctions.CSVBuilderClassification(classificationSave)
 # KrakenController.evaluationMode(pair,barsToUse,timeControl,testLocation,classificationSave,modelLocation,logFileLocation,holdingSummaryLocation,deviceUsedToModel,counter)
-KrakenController.tradingBot(key,privateKey,pair,amount,minSellAdjustment,barsToUse,timeControl,testLocation,classificationSave,modelLocation,logFileLocation,holdingSummaryLocation,deviceUsedToModel,counter)
+KrakenController.tradingBot(key,privateKey,pair,amount,minSellAdjustment,maximumHoldingsValue,barsToUse,timeControl,testLocation,classificationSave,modelLocation,logFileLocation,holdingSummaryLocation,deviceUsedToModel,counter)
 
