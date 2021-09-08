@@ -19,7 +19,7 @@ amount=[0.1,0.05]
 barsToUse=15
 # Time Between Request Batches
 timeControl=5
-counter=2784
+counter=2978
 maximumHoldingsValue=500
 
 # Device used to generate models: by default set to cpu 
