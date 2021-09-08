@@ -57,9 +57,10 @@ class KrakenController():
                     shutil.move(testLocation, classificationSave+'/sell/' +str(counter)+pair[x]+'.jpeg')
                     if (KrakenController.approveSale(pair[x],minSellAdjustment[x],holdingSummaryLocation)==1):
                         amountToSell=KrakenController.getHoldingAmount(pair[x],holdingSummaryLocation)
+                        amountToSell=(round(amountToSell, 2))
                         ka.MarketSell(key,privateKey,amountToSell,pair[x])
                         KrakenController.updateMainLog('SELL',pair[x],amountToSell,logFileLocation)
-                        KrakenController.logSale(pair[x],   amountToSell,holdingSummaryLocation)
+                        KrakenController.logSale(pair[x],amountToSell,holdingSummaryLocation)
                         print ("Sold Around: ",str(latest[len(latest)-1]))
                 else:
                     print ("Current Price of "+pair[x]+":"+str(latest[len(latest)-1]))

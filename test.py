@@ -13,18 +13,19 @@ privateKey= 'yourprivatekey'
 # Crypto[=currency Pair to Buy/Sell and Desired Amount
 pair=["XMRUSD","LTCUSD"] 
 minSellAdjustment=[1.01,1.01]
-amount=[0.1,0.05]
+amount=[0.15,0.05]
+maximumHoldingsValue=500
 
 # Risk Level (1= Very High , 5 = High , 15 = Medium, 30 = Low, 60 = Lowest)
 barsToUse=15
-# Time Between Request Batches
 timeControl=5
-counter=2978
-maximumHoldingsValue=500
+
+# Ignore For now will be phased out
+counter=3428
 
 # Device used to generate models: by default set to cpu 
 deviceUsedToModel='cpu'
-numEpochs=40
+numEpochs=30
 # Setting Directories up
 directory_path = os.getcwd()+'/KrakenBot'
 trainingPath=directory_path+'/generatedData/set/'
@@ -33,10 +34,10 @@ testLocation=directory_path+'/tests/tmp.jpeg'
 classificationSave=directory_path+'/tests'
 logFileLocation=directory_path+'/logs/logs.txt'
 holdingSummaryLocation=directory_path+'/logs/holdings.txt'
-modelLocation=(KrakenBot.__path__[0])+'/generatedModels/1.2.pth'
+modelLocation=(KrakenBot.__path__[0])+'/generatedModels/1.3.1.pth'
 
 HelperFunctions.SetupDirectories(directory_path)
-# HelperFunctions.CSVBuilderClassification('E:\gits\\Data Sets\\MAIN_LARGEST_DATASET\\1.2')
+# HelperFunctions.CSVBuilderClassification('E:\gits\\Data Sets\\MAIN_LARGEST_DATASET\\1.3')
 # TrainModel.train(trainingPath,modelSaveLocation,numEpochs)
 # HelperFunctions.CSVBuilderClassification(classificationSave)
 # KrakenController.evaluationMode(pair,barsToUse,timeControl,testLocation,classificationSave,modelLocation,logFileLocation,holdingSummaryLocation,deviceUsedToModel,counter)

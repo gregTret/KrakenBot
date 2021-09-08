@@ -29,7 +29,29 @@ pip3 install requests
 
 ## Setup
 
-1. Update your private and public keys inside of test.py.
+1. The development of a proper UI for this project is planned, but for the time being functionalty has been the priority. Some simple variable setting is required inside of the test.py file.
+
+2. Variables that need Updating: <br>
+```
+# Your Kraken Public Key (string)
+key= 'yourpublickey' 
+
+# Your Kraken Private Key (string)
+privateKey= 'yourprivatekey' 
+
+# A List of Currency pairs that you wish to trade (string)
+pair=["XMRUSD","LTCUSD"]  
+
+# A list holding the minimum profit percent at which to sell at (float)
+minSellAdjustment=[1.01,1.01] 
+
+# A List holding the desired amount of currency to purchase (float)
+amount=[0.15,0.05] 
+
+# The maximum amount to permit the value of your holdings to be. (float)
+maximumHoldingsValue=500 
+```
+
 
 2. Run test.py, call KrakenController.evaluationMode() to evaluate the model or KrakenController.tradingBot() to enable live trading.
 
