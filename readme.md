@@ -1,5 +1,5 @@
 ## Kraken Cryptocurrency Trading with Pytorch
->Built with and tested on Python 3.8 <br>
+>Built with and tested on Python 3.9 <br>
 >Using CUDA 11.1
 
 <h3> Essential Setup Instructions </h3>

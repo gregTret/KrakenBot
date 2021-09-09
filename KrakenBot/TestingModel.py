@@ -64,14 +64,12 @@ class TestingModel:
         warnings.simplefilter(action='ignore', category=UserWarning)
         # Loading In Googlenet Model
         model=torchvision.models.googlenet(pretrained=True)
-
         # Loading Trained Model
         try:
             model.load_state_dict(torch.load(modelLocation),strict=False)
         except:
             model.load_state_dict(torch.load(modelLocation,map_location=torch.device('cpu')),strict=False)
             pass
-        
         # Setting Device 
         model.to(deviceUsedForModel)
         # Setting model to eval mode
@@ -86,27 +84,40 @@ class TestingModel:
         index = output.data.cpu().numpy().argmax()
         return (index)
 
-    # def ClassifyImagesInDirectory(modelLocation,directory,deviceUsedForModel):
-    #     data=[]
-    #     counter=0
-    #     sd=next(walk(directory),(None, None, []))[2]
-    #     hp.CreateImageFolders(directory)
-    #     for x in sd:
-    #         if (x[0]=='n'):
-    #             shutil.move(directory +'/'+ x, directory+'/nothing/'+x)
-    #         elif (x[0]=='b'):
-    #             shutil.move(directory +'/'+ x, directory+'/buy/'+x)
-    #         elif (x[0]=='s'):
-    #             shutil.move(directory +'/'+ x, directory+'/sell/'+x)
-    #     hp.CSVBuilderClassification(directory)
-    #     quit()
-    #     directoryList=[directory+'/nothing/',directory+'/buy/',directory+'/sell/']
-    #     for x in directoryList:
-    #         sd=next(walk(x),(None, None, []))[2]
-    #         for i in sd:
-    #             tmp=[]
-    #             tmp.append(i)
-    #             tmp.append(str(counter))
-    #             data.append(tmp)
-    #         counter+=1
-    #     hp.D2listToCSV(data,directory+"/classifications.csv")
+    def ClassifyImages(modelLocation,directory,deviceUsedForModel):
+        # Disabling Warnings
+        warnings.simplefilter(action='ignore', category=FutureWarning)
+        warnings.simplefilter(action='ignore', category=UserWarning)
+        # Loading In Googlenet Model
+        model=torchvision.models.googlenet(pretrained=True)
+        # Loading Trained Model
+        try:
+            model.load_state_dict(torch.load(modelLocation),strict=False)
+        except:
+            model.load_state_dict(torch.load(modelLocation,map_location=torch.device('cpu')),strict=False)
+            pass
+        # Setting Device 
+        model.to(deviceUsedForModel)
+        # Setting model to eval mode
+        model.eval()
+        counter=1
+        sd=next(walk(directory),(None, None, []))[2]
+        hp.CreateImageFolders(directory)
+        for x in sd:
+            print(str(round(float(counter/len(sd)*100), 2))+'%')
+            counter+=1
+            img = Image.open(directory+'/'+x)
+            test_transforms = transforms.ToTensor()
+            # Converting Image to Tensor
+            image_tensor = test_transforms(img).float()
+            image_tensor = image_tensor.unsqueeze_(0)
+            # Returning Model Output
+            output = model(image_tensor)
+            index = output.data.cpu().numpy().argmax()
+            if (index==0):
+                shutil.move(directory +'/'+ x, directory+'/nothing/'+x)
+            elif (index==1):
+                shutil.move(directory +'/'+ x, directory+'/buy/'+x)
+            elif (index==2):
+                shutil.move(directory +'/'+ x, directory+'/sell/'+x)
+            

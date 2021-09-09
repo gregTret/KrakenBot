@@ -9,8 +9,6 @@ import os
 # Kraken API Public and Private Key
 key= 'yourpublickey'
 privateKey= 'yourprivatekey'
-
-# Crypto[=currency Pair to Buy/Sell and Desired Amount
 pair=["XMRUSD","LTCUSD"] 
 minSellAdjustment=[1.01,1.01]
 amount=[0.15,0.05]
@@ -21,7 +19,7 @@ barsToUse=15
 timeControl=5
 
 # Ignore For now will be phased out
-counter=3428
+counter=3773
 
 # Device used to generate models: by default set to cpu 
 deviceUsedToModel='cpu'
@@ -34,10 +32,12 @@ testLocation=directory_path+'/tests/tmp.jpeg'
 classificationSave=directory_path+'/tests'
 logFileLocation=directory_path+'/logs/logs.txt'
 holdingSummaryLocation=directory_path+'/logs/holdings.txt'
-modelLocation=(KrakenBot.__path__[0])+'/generatedModels/1.3.1.pth'
+modelLocation=(KrakenBot.__path__[0])+'/generatedModels/1.4.1.pth'
+massSortingDirectory='E:\gits\Data Sets\MAIN_LARGEST_DATASET\\1.4\\nextLevel\\backup'
 
 HelperFunctions.SetupDirectories(directory_path)
-# HelperFunctions.CSVBuilderClassification('E:\gits\\Data Sets\\MAIN_LARGEST_DATASET\\1.3')
+# HelperFunctions.CSVBuilderClassification('E:\gits\Data Sets\MAIN_LARGEST_DATASET\\1.4\\nextLevel\\1.4.0_sorted')
+# TestingModel.ClassifyImages(modelLocation,massSortingDirectory,deviceUsedToModel)
 # TrainModel.train(trainingPath,modelSaveLocation,numEpochs)
 # HelperFunctions.CSVBuilderClassification(classificationSave)
 # KrakenController.evaluationMode(pair,barsToUse,timeControl,testLocation,classificationSave,modelLocation,logFileLocation,holdingSummaryLocation,deviceUsedToModel,counter)
