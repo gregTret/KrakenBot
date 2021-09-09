@@ -65,7 +65,16 @@ class TestingModel:
         # Loading In Googlenet Model
         model=torchvision.models.googlenet(pretrained=True)
         # Loading Trained Model
-        model.load_state_dict(torch.load(modelLocation),strict=False)
+        try:
+            model.load_state_dict(torch.load(modelLocation),strict=False)
+        except:
+            model.load_state_dict(torch.load(modelLocation,map_location=torch.device('cpu')),strict=False)
+            pass
+        try:
+            model.load_state_dict(torch.load(modelLocation),strict=False)
+        except:
+            model.load_state_dict(torch.load(modelLocation,map_location=torch.device('cpu')),strict=False)
+            pass
         # Setting Device 
         model.to(deviceUsedForModel)
         # Setting model to eval mode

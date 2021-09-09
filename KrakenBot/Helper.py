@@ -16,14 +16,24 @@ class HelperFunctions():
             pass
 
     def SetupDirectories(currentPath):
-        status=1
         try:
             os.mkdir(currentPath+'/data')
+        except:
+            pass
+        try:
             os.mkdir(currentPath+'/generatedData')
+        except:
+            pass
+        try:
             os.mkdir(currentPath+'/generatedModels')
+        except:
+            pass
+        try:
             os.mkdir(currentPath+'/tests')
+        except:
+            pass
+        try:
             os.mkdir(currentPath+'/logs')
-            status=0
         except:
             pass
         try:
@@ -33,8 +43,15 @@ class HelperFunctions():
             f.close()
         except:
             print ("Failed to create Log Files.")
+            pass
+        try:
+            f = open(currentPath+'/logs/logs.txt', 'a')
+            f.close()
+            f = open(currentPath+'/logs/holdings.txt', 'a')
+            f.close()
+        except:
+            print ("Failed to create Log Files.")
             pass     
-        return status
 
     def ListToJPEG(data,filename):
         newData=[]
