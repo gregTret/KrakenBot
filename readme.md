@@ -2,13 +2,16 @@
 >Built with and tested on Python 3.9 <br>
 >Using CUDA 11.1
 
-<h3> Essential Setup Instructions </h3>
+## Releases
+The project can be cloned directly from the Github page, or from these releases (releases are less prone to errors).<br>
+https://github.com/gregTret/KrakenBot/releases/tag/1.0
+
+
+<h3> Package Installation </h3>
 
 1. Install required Packages. 
 Checkout https://pytorch.org/get-started/locally/ for the best Torch installation for your machine. 
 Enabling Cuda (GPU) as your device is strongly recommended.
-
-<h3> Required Packages: </h3>
 
 ```bash
 pip3 install numpy
