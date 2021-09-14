@@ -3,8 +3,8 @@
 >Using CUDA 11.1
 
 ## Releases
-The project can be cloned directly from the Github page, or from these releases (releases are less prone to errors).<br>
-https://github.com/gregTret/KrakenBot/releases/tag/1.0
+The project can be cloned directly from the Github page, or from these releases (newer releases are less prone to errors).<br>
+https://github.com/gregTret/KrakenBot/releases/tag/1.1
 
 
 <h3> Package Installation </h3>
