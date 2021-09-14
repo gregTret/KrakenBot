@@ -1,5 +1,4 @@
 *.pyc
 *.jpeg
 *.jpg
-holdings.txt
-logs.txt
+*.txt
