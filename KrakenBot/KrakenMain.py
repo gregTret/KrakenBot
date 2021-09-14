@@ -153,6 +153,9 @@ class KrakenController():
         data=hp.holdingCheck(holdingSummaryLocation)
         total=0
         for x in range(len(data)):
-            rowCost=float(data[x].split(',')[1])*float(data[x].split(',')[2])
-            total+=rowCost
+            try:
+                rowCost=float(data[x].split(',')[1])*float(data[x].split(',')[2])
+                total+=rowCost
+            except:
+                total+=0
         return total

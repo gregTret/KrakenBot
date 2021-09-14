@@ -9,17 +9,17 @@ import os
 # Kraken API Public and Private Key
 key= 'yourpublickey'
 privateKey= 'yourprivatekey'
-pair=["XMRUSD","LTCUSD"] 
+pair=["XMRUSD","ETHUSD"]
 minSellAdjustment=[1.01,1.01]
-amount=[0.15,0.05]
-maximumHoldingsValue=500
+amount=[0.15,0.01]
+maximumHoldingsValue=520
 
 # Risk Level (1= Very High , 5 = High , 15 = Medium, 30 = Low, 60 = Lowest)
-barsToUse=15
-timeControl=5
+barsToUse=5
+timeControl=2
 
 # Ignore For now will be phased out
-counter=3773
+counter=6194
 
 # Device used to generate models: by default set to cpu 
 deviceUsedToModel='cpu'
@@ -27,16 +27,16 @@ numEpochs=30
 # Setting Directories up
 directory_path = os.getcwd()+'/KrakenBot'
 trainingPath=directory_path+'/generatedData/set/'
-modelSaveLocation=directory_path+'/generatedModels/new_model.pth'
+modelSaveLocation=directory_path+'/generatedModels/1.4.3.pth'
 testLocation=directory_path+'/tests/tmp.jpeg'
 classificationSave=directory_path+'/tests'
 logFileLocation=directory_path+'/logs/logs.txt'
 holdingSummaryLocation=directory_path+'/logs/holdings.txt'
-modelLocation=(KrakenBot.__path__[0])+'/generatedModels/1.4.1.pth'
-massSortingDirectory='E:\gits\Data Sets\MAIN_LARGEST_DATASET\\1.4\\nextLevel\\backup'
+modelLocation=(KrakenBot.__path__[0])+'/generatedModels/1.4.3_a.pth'
+massSortingDirectory='E:\gits\Data Sets\MAIN_LARGEST_DATASET\\1.4.3\\2\\'
 
 HelperFunctions.SetupDirectories(directory_path)
-# HelperFunctions.CSVBuilderClassification('E:\gits\Data Sets\MAIN_LARGEST_DATASET\\1.4\\nextLevel\\1.4.0_sorted')
+# HelperFunctions.CSVBuilderClassification('E:\gits\Data Sets\MAIN_LARGEST_DATASET\\1.4.3\\1')
 # TestingModel.ClassifyImages(modelLocation,massSortingDirectory,deviceUsedToModel)
 # TrainModel.train(trainingPath,modelSaveLocation,numEpochs)
 # HelperFunctions.CSVBuilderClassification(classificationSave)
