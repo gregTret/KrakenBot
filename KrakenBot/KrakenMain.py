@@ -16,15 +16,13 @@ class KrakenController():
                 classification=tm.ClassifyImage(modelLocation, testLocation,deviceUsedToModel)
                 if (classification==1):
                     print (pair[x]+" is Low Currently At (BUY TIME): "+str(latest[len(latest)-1]))
-                    shutil.move(testLocation, classificationSave+'/buy/' +str(counter)+pair[x]+'.jpeg')
+                    shutil.move(testLocation, classificationSave+'/buy/' +str(int(1000*time.time()))+pair[x]+'.jpeg')
                 elif (classification==2):
                     print (pair[x]+" is High Currently At (SELL TIME): "+str(latest[len(latest)-1]))
-                    shutil.move(testLocation, classificationSave+'/sell/' +str(counter)+pair[x]+'.jpeg')
+                    shutil.move(testLocation, classificationSave+'/sell/' +str(int(1000*time.time()))+pair[x]+'.jpeg')
                 else:
                     print ("Current Price of "+pair[x]+":"+str(latest[len(latest)-1]))
-                    shutil.move(testLocation, classificationSave+'/nothing/' +str(counter)+pair[x]+'.jpeg')
-                counter+=1
-                print (counter)
+                    shutil.move(testLocation, classificationSave+'/nothing/' +str(int(1000*time.time()))+pair[x]+'.jpeg')
             minutes=timeControl
             print ("Waiting Until Next Batch for "+str(minutes)+ " Minutes")
             for i in range(minutes):
