@@ -4,7 +4,7 @@
 
 ## Releases
 The project can be cloned directly from the Github page, or from these releases (newer releases are less prone to errors).<br>
-https://github.com/gregTret/KrakenBot/releases/tag/1.2
+https://github.com/gregTret/KrakenBot/releases/tag/1.3
 
 
 <h3> Package Installation </h3>
