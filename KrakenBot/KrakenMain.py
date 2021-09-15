@@ -7,7 +7,7 @@ from .Helper import HelperFunctions as hp
 from .TestingModel import TestingModel as tm
 
 class KrakenController():
-    def evaluationMode(pair,barsToUse,timeControl,testLocation,classificationSave,modelLocation,deviceUsedToModel,counter):
+    def evaluationMode(pair,barsToUse,timeControl,testLocation,classificationSave,modelLocation,deviceUsedToModel):
         hp.CreateImageFolders(classificationSave)
         while (ka.KrakenStatus()==0):
             for x in range (len(pair)):
@@ -32,7 +32,7 @@ class KrakenController():
                 minutes-=1
                 print ("Waiting for "+str(minutes)+ " Minutes")
 
-    def tradingBot(key,privateKey,pair,amount,minSellAdjustment,maximumHoldingsValue,barsToUse,timeControl,testLocation,classificationSave,modelLocation,logFileLocation,holdingSummaryLocation,deviceUsedToModel,counter):
+    def tradingBot(key,privateKey,pair,amount,minSellAdjustment,maximumHoldingsValue,barsToUse,timeControl,testLocation,classificationSave,modelLocation,logFileLocation,holdingSummaryLocation,deviceUsedToModel):
          hp.CreateImageFolders(classificationSave)
          while (ka.KrakenStatus()==0):
             for x in range (len(pair)):
@@ -41,7 +41,7 @@ class KrakenController():
                 classification=tm.ClassifyImage(modelLocation, testLocation,deviceUsedToModel)
                 if (classification==1):
                     print (pair[x]+" is Low Currently At (BUY TIME): "+str(latest[len(latest)-1]))
-                    shutil.move(testLocation, classificationSave+'/buy/' +str(counter)+pair[x]+'.jpeg')
+                    shutil.move(testLocation, classificationSave+'/buy/' +str(int(1000*time.time()))+pair[x]+'.jpeg')
                     if (KrakenController.holdingsValue(holdingSummaryLocation)<maximumHoldingsValue):
                         if (KrakenController.approvePurchase(pair[x],holdingSummaryLocation)==1):
                             ka.MarketBuy(key,privateKey,amount[x],pair[x])
@@ -54,7 +54,7 @@ class KrakenController():
                         print ("Reached Maximum holdings Value, Will not purchase more...")
                 elif (classification==2):
                     print (pair[x]+" is High Currently At (SELL TIME): "+str(latest[len(latest)-1]))
-                    shutil.move(testLocation, classificationSave+'/sell/' +str(counter)+pair[x]+'.jpeg')
+                    shutil.move(testLocation, classificationSave+'/sell/' +str(int(1000*time.time()))+pair[x]+'.jpeg')
                     if (KrakenController.approveSale(pair[x],minSellAdjustment[x],holdingSummaryLocation)==1):
                         amountToSell=KrakenController.getHoldingAmount(pair[x],holdingSummaryLocation)
                         amountToSell=(round(amountToSell, 2))
@@ -64,9 +64,7 @@ class KrakenController():
                         print ("Sold Around: ",str(latest[len(latest)-1]))
                 else:
                     print ("Current Price of "+pair[x]+":"+str(latest[len(latest)-1]))
-                    shutil.move(testLocation, classificationSave+'/nothing/' +str(counter)+pair[x]+'.jpeg')
-                counter+=1
-                print (counter)
+                    shutil.move(testLocation, classificationSave+'/nothing/' +str(int(1000*time.time()))+pair[x]+'.jpeg')
             minutes=timeControl
             print ("Waiting Until Next Batch for "+str(minutes)+ " Minutes")
             for i in range(minutes):
