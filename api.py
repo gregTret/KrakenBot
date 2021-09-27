@@ -1,3 +1,4 @@
+from matplotlib.pyplot import bar
 import requests
 import json
 from flask import Flask, jsonify,request
@@ -31,21 +32,46 @@ modelLocation=directory_path+'/generatedModels/1.4.3_b.pth'
 trainingPath='E:\gits\Data Sets\MAIN_LARGEST_DATASET\\1.4.3\\3\\'
 configFile=directory_path+'/logs/configuration.json'
 
-# Loading Configuration File
-configuration=(HelperFunctions.readConfigurationFile(configFile))
-key= configuration['key']
-privateKey= configuration['privateKey']
-minSellAdjustment=configuration['minSellAdjustment']
-maximumHoldingsValue=configuration['maximumHoldingsValue']
-barsToUse=configuration['barsToUse']
-timeControl=configuration['timeControl']
-deviceUsedToModel=configuration['deviceUsedToModel']
-numEpochs=configuration['numEpochs']
+# Setting Global vars
+key=""
+privateKey=""
+minSellAdjustment=0
+maximumHoldingsValue=0
+barsToUse=0
+timeControl=0
+deviceUsedToModel=''
+numEpochs=0
 amount=[]
 pair=[]
-for attribute, value in configuration['pairs'].items():
-    pair.append(attribute)
-    amount.append(value)
+
+# Loading Global Configuration File
+def updateConfigurationVariables():
+    global key
+    global privateKey
+    global minSellAdjustment
+    global maximumHoldingsValue
+    global barsToUse
+    global timeControl
+    global deviceUsedToModel
+    global numEpochs
+    global amount
+    global pair
+    configuration=(HelperFunctions.readConfigurationFile(configFile))
+    key= configuration['key']
+    privateKey= configuration['privateKey']
+    minSellAdjustment=configuration['minSellAdjustment']
+    maximumHoldingsValue=configuration['maximumHoldingsValue']
+    barsToUse=configuration['barsToUse']
+    timeControl=configuration['timeControl']
+    deviceUsedToModel=configuration['deviceUsedToModel']
+    numEpochs=configuration['numEpochs']
+    amount=[]
+    pair=[]
+    for attribute, value in configuration['pairs'].items():
+        pair.append(attribute)
+        amount.append(value)
+
+updateConfigurationVariables()
 
 # Loading in Model Once for faster Classifications 
 # Loading In Googlenet Model
@@ -193,6 +219,10 @@ def addRecipe():
         return make_response(jsonify({'error':'Error in JSON'}), 400)
     with open(configFile, 'w') as f:
         json.dump(requestData, f, indent=4)
+    try:
+        updateConfigurationVariables()
+    except:
+        return make_response(jsonify({'error':'Error in Configuration file, may need to manually reset'}), 400)
     return make_response(jsonify({'Status':"Success"}), 200)
 
 app.run(port=3000)
