@@ -1,0 +1,14 @@
+{
+    "key": "",
+    "privateKey": "",
+    "deviceUsedToModel": "cpu",
+    "numEpochs": 30,
+    "minSellAdjustment": 1.01,
+    "maximumHoldingsValue": 500,
+    "barsToUse": 15,
+    "timeControl": 3,
+    "pairs": {
+        "XMRUSD": 0.25,
+        "ETHUSD": 0.01
+    }
+}

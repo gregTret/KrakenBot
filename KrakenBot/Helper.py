@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import os
 from os import walk
 import shutil
+import json
 
 # Functions used across multiple files
 class HelperFunctions():
@@ -54,6 +55,7 @@ class HelperFunctions():
             pass     
 
     def ListToJPEG(data,filename):
+        plt.switch_backend('agg')
         newData=[]
         for i in range(len(data)):
             if (i>=(len(data)-101)):
@@ -174,3 +176,9 @@ class HelperFunctions():
         elif (size=="30"):
             plt.savefig(filename,dpi=30)   
         plt.clf()
+
+    def readConfigurationFile(fileLocation):
+        with open(fileLocation) as f:
+            data = json.load(f)
+        return data
+

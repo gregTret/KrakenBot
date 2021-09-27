@@ -32,31 +32,40 @@ pip3 install requests
 
 ## Setup
 
-1. The development of a proper UI for this project is planned, but for the time being functionalty has been the priority. Some simple variable setting is required inside of the test.py file.
+1. The UI is in active development, but for now variables must be updated inside of the configuration.json file inside of the log folder.
 
 2. Variables that need Updating: <br>
 ```
+{
+    "key": "",
+    "privateKey": "",
+    "deviceUsedToModel": "cpu",
+    "numEpochs": 30,
+    "minSellAdjustment": 1.01,
+    "maximumHoldingsValue": 500,
+    "barsToUse": 15,
+    "timeControl": 3,
+    "pairs": {
+        "XMRUSD": 0.25,
+        "ETHUSD": 0.01
+    }
+}
+
+
 # Your Kraken Public Key (string)
 key= 'yourpublickey' 
 
 # Your Kraken Private Key (string)
 privateKey= 'yourprivatekey' 
 
-# A List of Currency pairs that you wish to trade (string)
-pair=["XMRUSD","LTCUSD"]  
-
-# A list holding the minimum profit percent at which to sell at (float)
-minSellAdjustment=[1.01,1.01] 
-
-# A List holding the desired amount of currency to purchase (float)
-amount=[0.15,0.05] 
-
 # The maximum amount to permit the value of your holdings to be. (float)
-maximumHoldingsValue=500 
+maximumHoldingsValue=500
+
+
 ```
 
 
-2. Run test.py, call KrakenController.evaluationMode() to evaluate the model or KrakenController.tradingBot() to enable live trading.
+2. Run test.py, call KrakenController.evaluationMode() to evaluate the model or KrakenController.tradingBot() to enable live trading. 
 
 <br>
 
