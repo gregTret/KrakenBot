@@ -36,14 +36,14 @@ class KrakenApiRequests:
         while (fail==1):
             try:
                 resp = requests.get(url) 
+                nickname= (str(resp.json()['result'])).split('\'')
                 fail=0
             except:
                 print ("Failed to get Data, trying again")
                 time.sleep(2)
                 fail=1
                 pass 
-            time.sleep(5)
-        nickname= (str(resp.json()['result'])).split('\'')
+            # time.sleep(5)
         for x in (resp.json()['result'][nickname[1]]):
             data.append(x)
         if (dataToReturn=='all'):
