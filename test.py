@@ -7,17 +7,16 @@ from KrakenBot import TrainingModel as TrainModel
 import os
 
 # Kraken API Public and Private Key
-key= 'yourpublickey'
-privateKey= 'yourprivatekey'
-pair=["XMRUSD","ETHUSD"]
-minSellAdjustment=[1.01,1.01]
-amount=[0.25,0.01]  
-maximumHoldingsValue=500
-
+key= ''
+privateKey= ''
+pair=["ETHUSD"]
+minSellAdjustment=[1.01]
+amount=[0.005]
+maximumHoldingsValue=55
 
 # Risk Level (1= Very High , 5 = High , 15 = Medium, 30 = Low, 60 = Lowest)
 barsToUse=5
-timeControl=2 
+timeControl=2
 
 # Device used to generate models: by default set to cpu 
 deviceUsedToModel='cpu'

@@ -1,23 +1,21 @@
-import logo from './logo.svg';
+import background from './img/background.png';
 import './App.css';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Homepage, Selection, Adjust, Graphpage } from './components';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App" style={{ backgroundImage: `url(${background})`, backgroundSize: `cover`}}>
+       <Router>
+        <header className="App-header">
+          <Homepage />
+          <Switch>
+            <Route path="/Selection" exact component={() => <Selection />} />
+          </Switch>
+          <Adjust />
+          <Graphpage />
+        </header>
+      </Router>
     </div>
   );
 }
