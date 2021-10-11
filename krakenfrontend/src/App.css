@@ -15,3 +15,63 @@
 .App-link {
   color: #61dafb;
 }
+
+/* .selectionComponent,
+.content {
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  text-align: center;
+}
+ */
+
+.krakenButton {
+  padding: 15px 25px 15px 25px;
+  margin: 30% 15px 15px 15px;
+  background: #6855d7;
+  border-radius: 15px;
+  text-decoration: none;
+  border: none;
+  color: white;
+}
+
+.krakenInput {
+  padding: 15px;
+  margin: 15px;
+  background: #6855d7;
+  border-radius: 15px;
+  text-decoration: none;
+  border: none;
+  outline: none;
+  width: 90%;
+}
+
+.krakenSelect {
+  padding: 15px;
+  margin: 15px;
+  background: #6855d7;
+  border-radius: 15px;
+  text-decoration: none;
+  border: none;
+  outline: none;
+  width: auto;
+}
+
+::placeholder {
+  color: white;
+  opacity: 1;
+}
+
+:-ms-input-placeholder {
+  color: white;
+}
+
+::-ms-input-placeholder {
+  color: white;
+}
+
+input,
+select,
+textarea {
+  color: white;
+}
