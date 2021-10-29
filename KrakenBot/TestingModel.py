@@ -102,6 +102,7 @@ class TestingModel:
         model.eval()
         counter=1
         sd=next(walk(directory),(None, None, []))[2]
+        print (sd)
         hp.CreateImageFolders(directory)
         for x in sd:
             print(str(round(float(counter/len(sd)*100), 2))+'%')

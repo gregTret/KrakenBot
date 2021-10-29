@@ -127,3 +127,23 @@ class KrakenApiRequests:
         }, api_key, api_sec,api_url)
         print(resp.json())
 
+    def getOrderFillPrice(apiKey,apiKeyPrivate,orderID):
+        api_url = "https://api.kraken.com"
+        api_key = apiKey
+        api_sec = apiKeyPrivate
+        resp = KrakenApiRequests.kraken_request('/0/private/QueryOrders', {
+            "nonce": str(int(1000*time.time())),
+            "txid": orderID,
+            "trades": True
+        }, api_key, api_sec, api_url)
+        return(resp.json()['result'][orderID]['price'])
+
+    def getTrades(apiKey,apiKeyPrivate):
+        api_url = "https://api.kraken.com"
+        api_key = apiKey
+        api_sec = apiKeyPrivate
+        resp = KrakenApiRequests.kraken_request('/0/private/TradesHistory', {
+        "nonce": str(int(1000*time.time())),
+        "trades": True
+        }, api_key, api_sec, api_url)
+        print(resp.json())

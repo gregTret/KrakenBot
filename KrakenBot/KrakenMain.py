@@ -7,29 +7,6 @@ from .Helper import HelperFunctions as hp
 from .TestingModel import TestingModel as tm
 
 class KrakenController():
-    def evaluationMode(pair,barsToUse,timeControl,testLocation,classificationSave,modelLocation,deviceUsedToModel):
-        hp.CreateImageFolders(classificationSave)
-        while (ka.KrakenStatus()==0):
-            for x in range (len(pair)):
-                latest=ka.getCurrentPrice(barsToUse, 'average', pair[x])
-                hp.ListToJPEG(latest,testLocation)
-                classification=tm.ClassifyImage(modelLocation, testLocation,deviceUsedToModel)
-                if (classification==1):
-                    print (pair[x]+" is Low Currently At (BUY TIME): "+str(latest[len(latest)-1]))
-                    shutil.move(testLocation, classificationSave+'/buy/' +str(int(1000*time.time()))+pair[x]+'.jpeg')
-                elif (classification==2):
-                    print (pair[x]+" is High Currently At (SELL TIME): "+str(latest[len(latest)-1]))
-                    shutil.move(testLocation, classificationSave+'/sell/' +str(int(1000*time.time()))+pair[x]+'.jpeg')
-                else:
-                    print ("Current Price of "+pair[x]+":"+str(latest[len(latest)-1]))
-                    shutil.move(testLocation, classificationSave+'/nothing/' +str(int(1000*time.time()))+pair[x]+'.jpeg')
-            minutes=timeControl
-            print ("Waiting Until Next Batch for "+str(minutes)+ " Minutes")
-            for i in range(minutes):
-                time.sleep(60)
-                minutes-=1
-                print ("Waiting for "+str(minutes)+ " Minutes")
-
     def tradingBot(key,privateKey,pair,amount,minSellAdjustment,maximumHoldingsValue,barsToUse,timeControl,testLocation,classificationSave,modelLocation,logFileLocation,holdingSummaryLocation,deviceUsedToModel):
          hp.CreateImageFolders(classificationSave)
          while (ka.KrakenStatus()==0):
@@ -37,10 +14,15 @@ class KrakenController():
                 latest=ka.getCurrentPrice(barsToUse, 'average', pair[x])
                 hp.ListToJPEG(latest,testLocation)
                 classification=tm.ClassifyImage(modelLocation, testLocation,deviceUsedToModel)
+                name=int(1000*time.time())
                 if (classification==1):
                     print (pair[x]+" is Low Currently At (BUY TIME): "+str(latest[len(latest)-1]))
-                    shutil.move(testLocation, classificationSave+'/buy/' +str(int(1000*time.time()))+pair[x]+'.jpeg')
-                    if (KrakenController.holdingsValue(holdingSummaryLocation)<maximumHoldingsValue):
+                    shutil.move(testLocation, classificationSave+'/buy/' +str(name)+pair[x]+'.jpeg')
+                    shutil.move(testLocation.replace(".jpeg",".txt"), classificationSave+'/buy/' +str(name)+pair[x]+'.txt')
+                    approximateCost=(amount[x]*latest[len(latest)-1])
+                    print ("Approximate Cost of Purchase=",approximateCost)
+                    print ("Current holdings Value:",str(KrakenController.holdingsValue(holdingSummaryLocation)))
+                    if ((KrakenController.holdingsValue(holdingSummaryLocation)+approximateCost)<maximumHoldingsValue):
                         if (KrakenController.approvePurchase(pair[x],holdingSummaryLocation)==1):
                             ka.MarketBuy(key,privateKey,amount[x],pair[x])
                             KrakenController.updateMainLog('BUY',pair[x],amount[x],logFileLocation)
@@ -49,10 +31,11 @@ class KrakenController():
                             priceApprox=round(priceApprox, 2)
                             print ("Bought around: ",str(latest[len(latest)-1]))
                     else:
-                        print ("Reached Maximum holdings Value, Will not purchase more...")
+                        print ("Reached or will exceed Maximum holdings Value, Will not purchase more...")
                 elif (classification==2):
                     print (pair[x]+" is High Currently At (SELL TIME): "+str(latest[len(latest)-1]))
-                    shutil.move(testLocation, classificationSave+'/sell/' +str(int(1000*time.time()))+pair[x]+'.jpeg')
+                    shutil.move(testLocation, classificationSave+'/sell/' +str(name)+pair[x]+'.jpeg')
+                    shutil.move(testLocation.replace(".jpeg",".txt"), classificationSave+'/sell/' +str(name)+pair[x]+'.txt')
                     if (KrakenController.approveSale(pair[x],minSellAdjustment,holdingSummaryLocation)==1):
                         amountToSell=KrakenController.getHoldingAmount(pair[x],holdingSummaryLocation)
                         amountToSell=(round(amountToSell, 2))
@@ -60,9 +43,12 @@ class KrakenController():
                         KrakenController.updateMainLog('SELL',pair[x],amountToSell,logFileLocation)
                         KrakenController.logSale(pair[x],amountToSell,holdingSummaryLocation)
                         print ("Sold Around: ",str(latest[len(latest)-1]))
+                    else:
+                        print ("Sale Not Approved")
                 else:
                     print ("Current Price of "+pair[x]+":"+str(latest[len(latest)-1]))
-                    shutil.move(testLocation, classificationSave+'/nothing/' +str(int(1000*time.time()))+pair[x]+'.jpeg')
+                    shutil.move(testLocation, classificationSave+'/nothing/' +str(name)+pair[x]+'.jpeg')
+                    shutil.move(testLocation.replace(".jpeg",".txt"), classificationSave+'/nothing/' +str(name)+pair[x]+'.txt')
             minutes=timeControl
             print ("Waiting Until Next Batch for "+str(minutes)+ " Minutes")
             for i in range(minutes):
@@ -187,13 +173,13 @@ class KrakenController():
         for x in range(len(data)):
             if(data[x].split(',')[0]==pair):
                 cost=float(data[x].split(',')[2])
-                if (lastPrice>=cost*0.985):
+                if (lastPrice>=cost*0.98):
                     return 0
         return 1
 
     def approveSale(pair,minimumProfit,holdingSummaryLocation):
         entryExists=0
-        lastPrice=ka.getCurrentPrice(1, 'lastOnly', pair)
+        lastPrice=ka.getCurrentPrice(1,'lastOnly',pair)
         data=hp.holdingCheck(holdingSummaryLocation)
         for x in range(len(data)):
             if(data[x].split(',')[0]==pair):

@@ -16,6 +16,7 @@ from PIL import Image
 from os import walk
 import time
 import shutil
+from flask_cors import CORS, cross_origin
 
 # Disabling Warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
@@ -168,6 +169,8 @@ def singleCycleAPI(key,privateKey,pair,amount,minSellAdjustment,maximumHoldingsV
 
 # Initializing App
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 # Pinging Kraken
 @app.route('/status', methods=['GET'])
@@ -209,7 +212,7 @@ def runOnce():
 @app.route('/configuration', methods=['GET'])
 def getConfiguration():
     configuration=(HelperFunctions.readConfigurationFile(configFile))
-    return json.dumps(configuration,indent=4)
+    return make_response(configuration, 200)
 
 @app.route('/configuration', methods=['POST'])
 def addRecipe():
@@ -225,4 +228,4 @@ def addRecipe():
         return make_response(jsonify({'error':'Error in Configuration file, may need to manually reset'}), 400)
     return make_response(jsonify({'Status':"Success"}), 200)
 
-app.run(port=3000)
+app.run(port=5000)

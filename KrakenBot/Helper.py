@@ -55,6 +55,7 @@ class HelperFunctions():
             pass     
 
     def ListToJPEG(data,filename):
+        HelperFunctions.ltf(filename.replace(".jpeg",".txt"),data)
         plt.switch_backend('agg')
         newData=[]
         for i in range(len(data)):
