@@ -12,7 +12,7 @@ from .CustomDataset import newDataSet
 class TrainingModel:
     def train(root_directory,saveLocation,numEpochs):
         warnings.simplefilter(action='ignore', category=FutureWarning)
-        warnings.simplefilter(action='ignore', category=UserWarning)
+        warnings.simplefilter(action='ignore ', category=UserWarning)
         device = torch.device ('cuda' if torch.cuda.is_available() else 'cpu')
         print ("Using:",device)
         in_channel=3
